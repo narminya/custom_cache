@@ -20,7 +20,7 @@ public class LFUCache<K, V> implements ICache<K, V> {
 
         if (!map.containsKey(key)) {
             if (maxSize <= map.size()) {
-                removeLeastUsedData();
+                evictLeastUsedData();
             }
             map.put(key, value);
             sorted.put(key, 0);
@@ -31,7 +31,7 @@ public class LFUCache<K, V> implements ICache<K, V> {
 
     }
 
-    public void removeLeastUsedData() {
+    public void evictLeastUsedData() {
         K key = sorted.lastKey();
         sorted.remove(key);
         map.remove(key);

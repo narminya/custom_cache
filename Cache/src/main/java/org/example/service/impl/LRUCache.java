@@ -19,7 +19,7 @@ public class LRUCache<K, V> implements ICache<K, V> {
 
         if ( !map.containsKey(key)) {
             if (maxSize <= map.size()) {
-                RemoveOldestData();
+                evictOldestData();
             }
             map.put(key, value);
             temp.put(LocalDateTime.now(), key);
@@ -29,7 +29,7 @@ public class LRUCache<K, V> implements ICache<K, V> {
         }
     }
 
-    public void RemoveOldestData() {
+    public void evictOldestData() {
         LocalDateTime oldest = temp.firstKey();
         K key = temp.remove(oldest);
         map.remove(key);
