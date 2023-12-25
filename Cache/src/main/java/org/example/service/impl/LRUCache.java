@@ -17,7 +17,7 @@ public class LRUCache<K, V> implements ICache<K, V> {
     @Override
     public boolean set(K key, V value) {
 
-        if ( !map.containsKey(key)) {
+        if (!map.containsKey(key)) {
             if (maxSize <= map.size()) {
                 evictOldestData();
             }
@@ -42,7 +42,8 @@ public class LRUCache<K, V> implements ICache<K, V> {
     }
 
 
-    private void reCache(K key) {
+    public void reCache(K key) {
+
         Set<Map.Entry<LocalDateTime, K>> entries = temp.entrySet();
         for (Map.Entry<LocalDateTime, K> entry : entries) {
             if (entry.getValue().equals(key)) {

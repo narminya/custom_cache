@@ -33,8 +33,11 @@ public class LFUCache<K, V> implements ICache<K, V> {
 
     public void evictLeastUsedData() {
         K key = sorted.lastKey();
-        sorted.remove(key);
-        map.remove(key);
+        if (key !=null){
+            sorted.remove(key);
+            map.remove(key);
+        }
+
     }
 
     @Override
@@ -44,10 +47,16 @@ public class LFUCache<K, V> implements ICache<K, V> {
     }
 
     public void reCache(K key) {
+        try {
+            if (sorted.get(key) != null) {
+                int current = sorted.get(key);
+                sorted.remove(key);
+                sorted.put(key, ++current);
+            }
 
-        Integer current = sorted.get(key);
-        sorted.remove(key);
-        sorted.put(key, ++current);
+        } catch (Exception ex) {
+            //todo
+        }
     }
 
 
